@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoApp</title>
+    <script src="./main.js" defer></script>
+</head>
+<body>
+    <div class="title">
+        <h1>ToDoApp</h1>
+    </div>
+    <div class="content">
+        <div class="projects">
+            <div class="projects-title">
+                <h3>Projects</h3>
+            </div>
+            <div class="projects-list"></div>
+            <button class="add-project">Add project</button>
+        </div>
+        <div class="project">
+            <div class="project-title">
+                <h2>Project</h2>
+            </div>
+            <div class="proj-name"></div>
+            <div class="todos-list"></div>
+            <button class="add-todo" disabled>Add todo</button>
+        </div>
+    </div>
+    <div class="project-box hidden">
+        <div class="project-box-background">
+            <div>
+                <label for="proj-title">Name:</label>
+                <input type="text" id="proj-title">
+            </div>
+            <button type="button" class="apply-project">Add project</button>
+        </div>
+    </div>
+    <div class="todo-box hidden">
+        <div class="todo-box-background">
+            <div>
+                <label for="todo-title">Title:</label>
+                <input type="text" id="todo-title">
+            </div>
+            <div>
+                <label for="todo-description">Description:</label>
+                <textarea name="description" id="todo-description" cols="25" rows="10"></textarea>
+            </div>
+            <div>
+                <label for="todo-date">Date:</label>
+                <input type="date" id="todo-date">
+            </div>
+            <div>
+                <label for="todo-priority">Priority:</label>
+                <select name="priority" id="todo-priority">
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+            </div>
+            <button type="button" class="apply-todo">Add todo</button>
+        </div>
+    </div>
+</body>
+</html>
