@@ -1,0 +1,173 @@
+:root {
+    --color1: #262626;
+    --color2: #404040;
+    --color3: #525252;
+    --color4: #737373;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    outline: none;
+}
+
+h1 {
+    font-size: 48px;
+}
+
+button {
+    border: 2px solid black;
+    border-radius: 50px;
+    background-color: var(--color4);
+    height: 50px;
+    width: 150px;
+    font-size: 22px;
+}
+
+input {
+    width: 250px;
+    height: 40px;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 50px;
+}
+
+.title {
+    background-color: #262626;
+    height: 10vh;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 2fr 7fr;
+    min-height: 90vh;
+}
+
+.project, .projects {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+h3 {
+    font-size: 32px;
+}
+
+.projects {
+    background-color: #404040;
+}
+
+.projects-list {
+    padding: 16px 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.single-project {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 28px;
+    border: 2px solid black;
+    border-radius: 50px;
+    padding: 12px;
+}
+
+.single-project > button {
+    font-size: 16px;
+    width: 100px;
+    height: 40px;
+}
+
+.project-name {
+    width: 150px;
+    overflow: hidden;
+}
+
+h2 {
+    font-size: 36px;
+}
+
+.project {
+    background-color: #525252;
+}
+
+.proj-name {
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    font-size: 48px;
+}
+
+.todos-list {
+    padding: 16px 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.title, .projects-title, .project-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-project, .add-todo {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.project-box, .todo-box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.project-box-background, .todo-box-background {
+    font-size: 20px;
+    background-color: var(--color1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    height: 200px;
+    width: 350px;
+    border-radius: 25px;
+}
+
+.todo-box-background {
+    width: 400px;
+    height: 500px;
+    padding: 0 24px;
+}
+
+.todo-box-background > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+textarea {
+    border-radius: 16px;
+    padding: 16px;
+}
+
+select {
+    width: 150px;
+    height: 30px;
+}
+
+.hidden {
+    visibility: hidden;
+    display: none;
+}
