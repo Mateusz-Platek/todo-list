@@ -1,23 +1,11 @@
 import './style.css'
-
-export class ToDo {
-    constructor(title, description, dueDate, priority) {
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
-    }
-}
-
-export class Project {
-    constructor(title) {
-        this.title = title;
-        this.todos = [];
-    }
-}
+import ToDo from './todo.js';
+import Project from './project.js';
 
 let projects = [];
 let selected;
+
+projects = JSON.parse(localStorage.getItem("projects") || "[]");
 
 let projectsList = document.querySelector('.projects-list');
 let addProject = document.querySelector('.add-project');
@@ -34,62 +22,72 @@ let todoDescription = document.querySelector('#todo-description');
 let todoDate = document.querySelector('#todo-date');
 let todoPriority = document.querySelector('#todo-priority');
 
-// let createTodo = function(name, description, date, priority) {
-//     let todo = document.createElement('div');
-//     let nameTodo = document.createElement('div');
-//     nameTodo.textContent = name;
-//     todo.appendChild(nameTodo);
-//     let descriptionTodo = document.createElement('div');
-//     descriptionTodo.textContent = description;
-//     todo.appendChild(descriptionTodo);
-//     let dateTodo = document.createElement('div');
-//     dateTodo.textContent = date;
-//     todo.appendChild(dateTodo);
-//     let priorityTodo = document.createElement('div');
-//     priorityTodo.textContent = priority;
-//     todo.appendChild(priorityTodo);
-//     let removeTodo = document.createElement('button');
-//     removeTodo.textContent = 'Remove';
-//     removeTodo.addEventListener('click', () => {
-//         todosList.removeChild(todo);
-//     });
-//     todo.appendChild(removeTodo);
-//     todosList.appendChild(todo);
-// }
+let sortTodos = function() {
+    for(let i = 0; i < projects.length; i++) {
+        for(let j = 0; j < projects[i].todos.length; j++) {
+            for(let k = 0; k < projects[i].todos.length - j - 1; k++) {
+                if((projects[i].todos[k].priority == 'low' && (projects[i].todos[k + 1].priority == 'medium' || projects[i].todos[k + 1].priority == 'high')) || (projects[i].todos[k].priority == 'medium' && projects[i].todos[k + 1].priority == 'high')) {
+                    console.log(projects[i].todos[k]);
+                    let tmp = projects[i].todos[k];
+                    console.log(projects[i].todos[k + 1]);
+                    projects[i].todos[k] = projects[i].todos[k + 1];
+                    projects[i].todos[k + 1] = tmp;
+                }
+            }
+        }
+    }
+}
 
 let createTodos = function() {
+    sortTodos();
+    localStorage.removeItem('projects');
     for(let i = 0; i < projects.length; i++) {
         if(projects[i].title == selected) {
             todosList.textContent = '';
             for(let j = 0; j < projects[i].todos.length; j++) {
                 let todo = document.createElement('div');
+                todo.classList.add('todo');
                 let nameTodo = document.createElement('div');
+                nameTodo.classList.add('left-name');
                 nameTodo.textContent = 'Title: ' + projects[i].todos[j].title;
                 todo.appendChild(nameTodo);
                 let descriptionTodo = document.createElement('div');
+                descriptionTodo.classList.add('mid-desc');
                 descriptionTodo.textContent = 'Description: ' + projects[i].todos[j].description;
                 todo.appendChild(descriptionTodo);
                 let dateTodo = document.createElement('div');
+                dateTodo.classList.add('mid-date');
                 dateTodo.textContent = 'Date: ' + projects[i].todos[j].dueDate;
                 todo.appendChild(dateTodo);
                 let priorityTodo = document.createElement('div');
+                priorityTodo.classList.add('left-prio');
                 priorityTodo.textContent = 'Priority: ' + projects[i].todos[j].priority;
+                if(projects[i].todos[j].priority == 'high') {
+                    todo.classList.add('high');
+                } else if(projects[i].todos[j].priority == 'medium') {
+                    todo.classList.add('medium');
+                } else {
+                    todo.classList.add('low');
+                }
                 todo.appendChild(priorityTodo);
                 let removeTodo = document.createElement('button');
                 removeTodo.textContent = 'Remove';
                 removeTodo.addEventListener('click', () => {
+                    localStorage.removeItem('projects');
                     projects[i].todos = projects[i].todos.filter(todo => {
                         for(let k = 0; k < projects[i].todos.length; k++) {
                             return todo.title != projects[i].todos[k].title
                         }
                     });
                     todosList.removeChild(todo);
+                    localStorage.setItem('projects', JSON.stringify(projects));
                 });
                 todo.appendChild(removeTodo);
                 todosList.appendChild(todo);
             }
         }
     }
+    localStorage.setItem('projects', JSON.stringify(projects));
 }
 
 addTodo.addEventListener('click', () => {
@@ -102,6 +100,9 @@ applyTodo.addEventListener('click', () => {
     let description = todoDescription.value;
     let date = todoDate.value;
     let priority = todoPriority.value;
+    if(title == '' || description == '' || date == '') {
+        return;
+    }
     let todo = new ToDo(title, description, date, priority);
     for(let i = 0; i < projects.length; i++) {
         if(projects[i].title == selected) {
@@ -136,11 +137,13 @@ let createProject = function(name) {
     let removeProject = document.createElement('button');
     removeProject.textContent = 'Remove';
     removeProject.addEventListener('click', () => {
+        localStorage.removeItem('projects');
         projectsList.removeChild(singleProject);
         projects = projects.filter(project => project.title != name);
         projName.textContent = '';
         todosList.textContent = '';
         addTodo.setAttribute('disabled', '');
+        localStorage.setItem('projects', JSON.stringify(projects));
     });
     singleProject.appendChild(projectName);
     singleProject.appendChild(removeProject);
@@ -176,3 +179,5 @@ applyProject.addEventListener('click', () => {
     projects.push(project);
     displayProjects();
 });
+
+displayProjects();
